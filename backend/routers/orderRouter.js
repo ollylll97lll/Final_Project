@@ -2,9 +2,15 @@ import express from 'express';
 import 'express-async-handler'
 import expressAsyncHandler from 'express-async-handler';
 import orderModel from '../models/orderModel.js'
-import { isAuth } from '../utils.js';
+import { isAdmin, isAuth } from '../utils.js';
 
 const orderRouter = express.Router();
+
+// get name of users from the user collection and return.
+orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler( async (req,res) => {
+  const orders = await orderModel.find({}).populate('use', 'name');
+  res.send(orders);
+}))
 
 // applying the authetication using jwt key
 orderRouter.get('/mine',isAuth, expressAsyncHandler(async ( req, res) =>{

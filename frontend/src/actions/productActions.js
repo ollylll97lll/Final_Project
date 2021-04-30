@@ -98,7 +98,7 @@ export const createProduct = () => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
     try {
-      const { data } = await Axios.delete(
+     await Axios.delete(
         `/api/products/${productId}`,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },

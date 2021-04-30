@@ -1,6 +1,7 @@
 import {CartScreen, Home, ProductScreen} from '../screens/index';
 import LoginScreen from '../screens/LoginScreen';
 import OrderHistoryScreen from '../screens/OrderHistoryScreen';
+import OrderListScreen from '../screens/OrderListScreen';
 import OrderScreen from '../screens/OrderScreen';
 import PaymentMethodScreen from '../screens/PaymentMethodScreen';
 import PlaceOrderScreen from '../screens/PlaceOrderScreen';
@@ -107,6 +108,12 @@ const adminroutes = [
         path: '/product/:id/edit',
         exact: 'true',
         component: ProductEditScreen,
+        fallback: <body>...Loading</body>
+    },
+    {
+        path: '/orderlist',
+        exact: 'true',
+        component: OrderListScreen,
         fallback: <body>...Loading</body>
     }
 ]
