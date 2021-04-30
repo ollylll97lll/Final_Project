@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MessageBox from '../components/MessageBox';
 import LoadingBox from '../components/LoadingBox';
-import { detailsOrder, payOrder } from '../actions/orderActions';
+import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
 import axios from 'axios';
-import { ORDER_PAY_RESET } from '../constants/orderConstants';
+import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from '../constants/orderConstants';
+import Button from '../../node_modules/react-bootstrap/esm/Button';
 
 
 export default function OrderScreen(props) {
@@ -15,12 +16,23 @@ export default function OrderScreen(props) {
     const [sdkReady, setSdkReady] = useState(false);
     const orderDetails = useSelector(state => state.orderDetails);
     const { order, loading, error } = orderDetails;
+
     const orderPay = useSelector((state) => state.orderPay);
     const {
         loading: loadingPay,
         error: errorPay,
         success: successPay,
     } = orderPay;
+
+    const orderDeliver = useSelector((state) => state.orderDeliver);
+    const {
+        loading: loadingDeliver,
+        error: errorDeliver,
+        success: successDeliver,
+    } = orderDeliver;
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -35,8 +47,9 @@ export default function OrderScreen(props) {
             };
             document.body.appendChild(script);
         };
-        if (!order || successPay || (order && order._id !== orderId)) {
+        if (!order || successPay || successDeliver || (order && order._id !== orderId)) {
             dispatch({ type: ORDER_PAY_RESET });
+            dispatch({ type: ORDER_DELIVER_RESET });
             dispatch(detailsOrder(orderId));
         } else {
             // if order no paid or there are no paypal window to pay then add paypal script
@@ -48,11 +61,14 @@ export default function OrderScreen(props) {
                 }
             }
         }
-    }, [dispatch, orderId, order, sdkReady, successPay]);
+    }, [dispatch, orderId, order, sdkReady, successPay, successDeliver]);
 
     const successPaymentHandler = (paymentResult) => {
         dispatch(payOrder(order, paymentResult));
     };
+    const deliverHandler = () => {
+        dispatch(deliverOrder(order._id));
+    }
     return loading ? (<LoadingBox />) : error ? (<MessageBox variant="danger">{error}</MessageBox>) : (
         <div>
             <Container>
@@ -167,6 +183,18 @@ export default function OrderScreen(props) {
                                             </li>
                                         )
                                     }
+                                    {/* check whether the user is Admin, the order is paid and not delivered, then render this component */}
+                                    {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                                        <li>
+                                            {loadingDeliver && <LoadingBox></LoadingBox>}
+                                            {errorDeliver && (
+                                                <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                                            )}
+                                            <Button onClick={deliverHandler}>
+                                                Order Delivered
+                                            </Button>
+                                        </li>
+                                    )}
                                 </ul>
                             </Card.Body>
                         </Card>
