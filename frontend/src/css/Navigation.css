@@ -1,0 +1,220 @@
+:root{
+  --header-nav-font-color: #E5DFD9;
+  --black: #000000;
+  --white: #FFFFFF;
+  --transparent: #00000000;
+  --shop-primary-color-brown: #99706A;
+}
+  /* ------------------------------------------------------- */
+  
+  /* HEADER FIXED BANNER SECTION */
+  header#header-fixed-banner{
+    /* POSITIONING */
+    /* NOTE: HEADER STAY ON TOP OF THE WEBSITE */
+    /* TODO: TOOGLE BETWEEN TRANSPARENCY BACKGROUND
+    AND HIDE THE HEADER ON SCROLL DOWN
+    CHANGE BACKGROUND TO WHITE/DARK WHEN SCROLL UP */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    box-sizing: border-box;
+    height: 120px;
+    position: fixed;
+    z-index: 100;
+  
+    /* BACKGROUND COLOR */
+    background-image: linear-gradient(to bottom,var(--black) 0,var(--transparent) 100%);
+  }
+
+  .farfromhome{
+    position: relative;
+  }
+  
+  header#header-fixed-banner:hover{
+    background-image: linear-gradient(to bottom, var(--black) 0, var(--black) 100%);
+  }
+
+  #header-fixed-banner a{
+  color: var(--header-nav-font-color) !important;
+  }
+  
+  /* HEADER ICONS */
+  header svg.header-icons{
+    padding: 0;
+    margin: 0;
+    width: 15px;
+    height: 15px;
+    fill: var(--header-nav-font-color);
+    vertical-align: baseline;
+  }
+  header svg.header-icons:hover{
+    fill: var(--white);
+  }
+  header  div.header-search-button a svg#search-icon{
+    padding: 0;
+    margin: 0;
+    width: 25px;
+    height: 25px;
+  }
+  
+  /* HEADER SPAN SIZING */
+  header span{
+    font-size: 1rem;
+  }
+
+  /* ----------------------------------------- */
+  /* NAVIGATION LIST ITEMS */
+  header nav li.header-nav-list-item{
+    display: inline-block;
+    margin:0 15px;
+  }
+  
+  /* SECONDARY NAVIGATION BAR */
+  nav ul.secondary-header-nav-bar{
+    top: 25px;
+    /* FONTs */
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  /* --------------------------- */
+  
+  /* LOGO SECTION */
+  
+  /* LOGO DIV */
+  header div.logo{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    top: 15px;
+    width: 100%;
+    font-size: 100%;
+    vertical-align: baseline;
+  }
+  
+  /* LOGO */
+  header div.logo a{
+    /* Logo asset link */
+    background-image: url("../Assets/icons/Logo_And.png");
+    /* logo size */
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 150px 60px;
+    height: 60px;
+    width: 150px;
+    /* logo positioning */
+    position: relative;
+    vertical-align: baseline;
+    margin: 0;
+    padding:0;
+    border: 0;
+    font-size: 0;
+    z-index: 100;
+  }
+  /* ------------------------------- */
+  
+  /* HEADER <a> TAGS */
+    /* HEADER MAIN NAVIGATION <a> tags  */
+  header nav ul.main-header-nav-bar li a{
+    font-family: 'cyclicsans-bold';
+  }
+  header nav ul.main-header-nav-bar li a:hover{
+    font-family: 'cyclicsans-heavy';
+    font-size: 1.2rem;
+  }
+    /*HEADER SECONDARY NAVIGATION <a> tags  */
+  header nav ul.secondary-header-nav-bar li a{
+    font-family: 'cyclicsans-light';
+  }
+  header nav ul.secondary-header-nav-bar li a:hover{
+    font-family: 'cyclicsans-normal';
+    color: var(--white);
+  }
+  /* --------------------------- */
+  
+  /* NAVIGATION BARs SECTION */
+  
+  /* HEADER <ul> IN THE <nav> TAG */
+  header ul{
+    list-style-type: none;
+  }
+  
+  /* NAVIGATION BARS */
+      /* STORE LOCATOR NAVIGATION BAR */
+      header nav ul.locator-nav-bar{
+        /* LAYOUT */
+        position: relative;
+        float: left;
+        vertical-align: baseline;
+        left: 10px;
+        z-index: 100;
+        margin: 0;
+        padding: 0;}
+      /* USER NAVIGATION BAR */
+      header ul.customer-nav-bar{
+      width: 200px;
+      position: relative;
+      float: right;
+      vertical-align: baseline;
+      right: 70px;
+      z-index: 100;
+      margin: 0;
+      padding: 0;
+      }
+      /* MAIN NAVIGATION BAR*/
+      header ul.main-header-nav-bar{
+        left: 0;
+        position: absolute;
+        text-align: center;
+        margin:  16px 0 !important;
+        right: 0;
+        padding:0 40px;
+        top: 70px;
+      }
+        /* MAIN HEADER ITEMS */
+      header ul div.main-header-nav-items{
+        margin: 0 5px;
+      }
+      header ul div.main-header-nav-items a{
+        padding: 0 10px;
+      }
+      header ul.main-header-nav-bar li{
+        /* TODO:  */
+      }
+  /* ------------------------------- */
+  /* SEARCH BAR */
+    /* SEARCH DIV CLASS */
+    header div.header-search-button{
+      display: block;
+    }
+    header div.header-search-button a{
+      position: absolute;
+      display: block;
+      vertical-align: middle;
+      float: right;
+      right: 10px;
+      top: 15px;
+      width: 33px;
+      cursor: pointer;
+      z-index: 100;
+      overflow: hidden;
+    }
+
+    #nonedropdown{
+      background-color: transparent !important;
+      border: transparent !important;
+      padding: 0;
+      margin: 0;
+      float: left;
+    }
+    .dropdown-menu{
+      background-color: var(--black) !important;
+    }
+    a.dropdown-items:hover{
+      text-decoration: black;
+    }
+
+  

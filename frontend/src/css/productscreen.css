@@ -1,0 +1,16 @@
+.product-details{
+
+}
+.product-details div{
+    width: 100%;
+}
+ul{
+    margin: 0;
+    padding:0;
+}
+div{
+    width: 100%;
+}
+.checkout div{
+    padding-left: 10px;
+}
