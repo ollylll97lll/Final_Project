@@ -7,11 +7,25 @@ import { isAdmin, isAuth } from '../utils.js';
 const productRouters = express.Router();
 productRouters.get('/', expressAsyncHandler(async (req, res) => {
     const name = req.query.name || '';
+    const category = req.query.category || '';
+    
     const nameFilter = name ? {name: {$regex: name, $options:'i' } } : {};
-    const products = await productModel.find({...nameFilter});
+    const categoryFilter = category ? { category } : {};
+
+    const products = await productModel.find({...nameFilter, ...categoryFilter});
 
     res.send(products);
 }))
+
+productRouters.get(
+    '/cat/categories',
+    expressAsyncHandler(async (req, res) => {
+      const categories = await productModel.find().distinct('category');
+      res.send(categories);
+    })
+  );
+
+
 productRouters.get('/seed', expressAsyncHandler(async (req, res) => {
     await productModel.remove({});
     const createProducts = await productModel.insertMany(sampledata.products);

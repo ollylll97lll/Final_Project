@@ -96,6 +96,18 @@ const configroutes = [
         component: SearchScreen,
         fallback: <body>...Loading</body>
     },
+    {
+        path: '/search/category/:category',
+        exact: 'true',
+        component: SearchScreen,
+        fallback: <body>...Loading</body>
+    },
+    {
+        path: '/search/category/:category/name/:name',
+        exact: 'true',
+        component: SearchScreen,
+        fallback: <body>...Loading</body>
+    },
 ];
 
 const privateroutes = [

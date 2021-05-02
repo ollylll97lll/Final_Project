@@ -1,4 +1,4 @@
-import { PRODUCT_CREATE_FAIL, PRODUCT_CREATE_REQUEST, PRODUCT_CREATE_RESET, PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_RESET, PRODUCT_DELETE_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_UPDATE_FAIL, PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_RESET, PRODUCT_UPDATE_SUCCESS } from "../constants/productConstants";
+import { PRODUCT_CATEGORY_LIST_FAIL, PRODUCT_CATEGORY_LIST_REQUEST, PRODUCT_CATEGORY_LIST_SUCCESS, PRODUCT_CREATE_FAIL, PRODUCT_CREATE_REQUEST, PRODUCT_CREATE_RESET, PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_RESET, PRODUCT_DELETE_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_UPDATE_FAIL, PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_RESET, PRODUCT_UPDATE_SUCCESS } from "../constants/productConstants";
 // set the product to empty array [] instead of null to prevent error
 export const productListReducer = (state = { loading: true, product: [] }, action) => {
     switch (action.type) {
@@ -14,6 +14,24 @@ export const productListReducer = (state = { loading: true, product: [] }, actio
         default: return state;
     }
 }
+
+export const productCategoryListReducer = (
+    state = { loading: true, products: [] },
+    action
+  ) => {
+    switch (action.type) {
+      case PRODUCT_CATEGORY_LIST_REQUEST:
+        return { loading: true };
+      case PRODUCT_CATEGORY_LIST_SUCCESS:
+        return { loading: false, categories: action.payload };
+      case PRODUCT_CATEGORY_LIST_FAIL:
+        return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  };
+  
+
 // set the product to empty object {} instead of null to prevent error
 export const productDetailsReducer = (state = { loading: true}, action) => {
     switch (action.type) {

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import { signout } from '../actions/userActions';
 import SearchBox from './SearchBox';
+import { listProductCategories } from '../actions/productActions';
 
 function NavigationBar() {
   const dispatch = useDispatch();
@@ -43,6 +44,10 @@ function NavigationBar() {
       window.removeEventListener("scroll", handleScroll);
     }
   }, [prevScrollPos, visible, handleScroll]);
+
+  useEffect(() => {
+    dispatch(listProductCategories());
+  }, [dispatch])
 
 
   const seenheight = {
@@ -88,19 +93,19 @@ function NavigationBar() {
 
             <li className="header-nav-list-item">
               <div className="main-header-nav-items">
-                <Link to="/products/top">TOPS</Link>
+                <Link to="/search/category/top/name/all">TOPS</Link>
               </div>
             </li>
 
             <li className="header-nav-list-item">
               <div className="main-header-nav-items">
-                <Link to="/products/bottom">BOTTOMS</Link>
+                <Link to="/search/category/bottom/name/all">BOTTOMS</Link>
               </div>
             </li>
 
             <li className="header-nav-list-item">
               <div className="main-header-nav-items">
-                <Link to="/products/bags-accessories">BAGS & ACCESSORIES</Link>
+                <Link to="/search/category/accessories/name/all">ACCESSORIES</Link>
               </div>
             </li>
 
