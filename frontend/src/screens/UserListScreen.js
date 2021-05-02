@@ -5,9 +5,9 @@ import Table from '../../node_modules/react-bootstrap/esm/Table';
 import { deleteUser, listUsers } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
-import { USER_DELETE_RESET } from '../constants/userConstants';
+import { USER_DELETE_RESET, USER_DETAILS_RESET } from '../constants/userConstants';
 
-export default function UserListScreen() {
+export default function UserListScreen(props) {
     const userList = useSelector((state) => state.userList);
     const { loading, error, users } = userList;
 
@@ -17,6 +17,7 @@ export default function UserListScreen() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(listUsers());
+        dispatch({type: USER_DETAILS_RESET});
         if(successDelete){
             dispatch({ type: USER_DELETE_RESET });
           }
@@ -58,9 +59,9 @@ export default function UserListScreen() {
                                                 <Button
                                                     type="button"
                                                     size="small"
-                                                // onClick={() => {
-                                                //     props.history.push(`/order/${order._id}`);
-                                                // }}
+                                                onClick={() => {
+                                                    props.history.push(`/user/${user._id}/edit`);
+                                                }}
                                                 >Details</Button>
 
                                                 <Button

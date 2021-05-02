@@ -10,6 +10,7 @@ import ProductListScreen from '../screens/ProductListScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ShippingAddressScreen from '../screens/ShippingAddressScreen';
+import UserEditScreen from '../screens/UserEditScreen';
 import UserListScreen from '../screens/UserListScreen';
 
 const configroutes = [
@@ -121,6 +122,11 @@ const adminroutes = [
         path: '/userlist',
         exact: 'true',
         component: UserListScreen,
+        fallback: <body>...Loading</body>
+    },{
+        path: '/user/:id/edit',
+        exact: 'true',
+        component: UserEditScreen,
         fallback: <body>...Loading</body>
     },
 ]

@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS, USER_UPDATE_PROFILE_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL } from "../constants/userConstants";
+import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS, USER_UPDATE_PROFILE_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL } from "../constants/userConstants";
 export const login = (email, password) => async (dispatch) => {
     dispatch({
         type: USER_LOGIN_REQUEST,
@@ -72,7 +72,6 @@ export const detailsUser = (userId) => async (dispatch, getState) => {
         });
 
         dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
-        localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error) {
         const message =
             error.response && error.response.data.message
@@ -152,3 +151,22 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
       dispatch({ type: USER_DELETE_FAIL, payload: message });
     }
   };
+
+  export const updateUser = (user) => async (dispatch, getState) => {
+    dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });
+    const {
+        userLogin: { userInfo },
+    } = getState();
+    try {
+        const { data } = await Axios.put(`/api/users/${user._id}`, user, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        dispatch({ type: USER_UPDATE_FAIL, payload: message });
+    }
+};
