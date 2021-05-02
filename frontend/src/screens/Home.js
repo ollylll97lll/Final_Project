@@ -18,7 +18,7 @@ function Home(props) {
 
     const {load, err, carouseldata} = carouselList;
     useEffect(() => {
-       dispatch(listProducts());
+       dispatch(listProducts({}));
     }, [dispatch]);
     
     useEffect(() => {
@@ -58,10 +58,11 @@ function Home(props) {
                 <Container>
 
                     <Row xs={1} sm={2} md={3}>
+                        {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
                         {
-                            products.map((products) => {
+                            products.map((product) => {
                                 return (
-                                    <Col className='mx-auto'><CardItems key={products._id} id={products._id} name={products.name} image={products.image} price={products.price} /></Col>
+                                    <Col className='mx-auto'><CardItems key={product._id} id={product._id} name={product.name} image={product.image} price={product.price} /></Col>
                                 );
                             })
                         }

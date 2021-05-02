@@ -6,7 +6,10 @@ import { isAdmin, isAuth } from '../utils.js';
 
 const productRouters = express.Router();
 productRouters.get('/', expressAsyncHandler(async (req, res) => {
-    const products = await productModel.find({});
+    const name = req.query.name || '';
+    const nameFilter = name ? {name: {$regex: name, $options:'i' } } : {};
+    const products = await productModel.find({...nameFilter});
+
     res.send(products);
 }))
 productRouters.get('/seed', expressAsyncHandler(async (req, res) => {

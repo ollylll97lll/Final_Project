@@ -1,4 +1,4 @@
-import {CartScreen, Home, ProductScreen} from '../screens/index';
+import { CartScreen, Home, ProductScreen } from '../screens/index';
 import LoginScreen from '../screens/LoginScreen';
 import OrderHistoryScreen from '../screens/OrderHistoryScreen';
 import OrderListScreen from '../screens/OrderListScreen';
@@ -9,25 +9,26 @@ import ProductEditScreen from '../screens/ProductEditScreen.';
 import ProductListScreen from '../screens/ProductListScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import SearchScreen from '../screens/SearchScreen';
 import ShippingAddressScreen from '../screens/ShippingAddressScreen';
 import UserEditScreen from '../screens/UserEditScreen';
 import UserListScreen from '../screens/UserListScreen';
 
 const configroutes = [
     {
-        path : '/' ,
+        path: '/',
         exact: 'true',
         component: Home,
         fallback: <body>...Loading</body>,
         routes: [
             {
-                path:'/#',
-                exact: 'false',                
+                path: '/#',
+                exact: 'false',
                 component: Home,
                 fallback: <body>...Loading</body>
             },
             {
-                path:'/homepage',
+                path: '/homepage',
                 exact: 'false',
                 component: Home,
                 fallback: <body>...Loading</body>
@@ -88,6 +89,12 @@ const configroutes = [
         exact: 'false',
         component: OrderHistoryScreen,
         fallback: <body>...Loading</body>
+    }, 
+    {
+        path: '/search/name/:name?',
+        exact: 'true',
+        component: SearchScreen,
+        fallback: <body>...Loading</body>
     },
 ];
 
@@ -123,11 +130,11 @@ const adminroutes = [
         exact: 'true',
         component: UserListScreen,
         fallback: <body>...Loading</body>
-    },{
+    }, {
         path: '/user/:id/edit',
         exact: 'true',
         component: UserEditScreen,
         fallback: <body>...Loading</body>
     },
 ]
-export  {configroutes, privateroutes, adminroutes};
+export { configroutes, privateroutes, adminroutes };

@@ -187,9 +187,6 @@
   /* ------------------------------- */
   /* SEARCH BAR */
     /* SEARCH DIV CLASS */
-    header div.header-search-button{
-      display: block;
-    }
     header div.header-search-button a{
       position: absolute;
       display: block;
@@ -217,4 +214,28 @@
       text-decoration: black;
     }
 
-  
+  #search-bar-toggle{
+    z-index: 9999;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 120px;
+  }
+  #search-bar-toggle button{
+    background-color: transparent;
+    border: transparent;
+    position: absolute;
+    display: block;
+    top:0;
+    right:15px;
+    float: right;
+    width: 40px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  #search-bar-toggle svg#search-icon {
+      padding: 0;
+      margin: 0;
+      width: 35px;
+      height: 35px;
+  }
