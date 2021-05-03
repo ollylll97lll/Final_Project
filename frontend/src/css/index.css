@@ -182,5 +182,9 @@ img.small{
   color: #20a020;
   background-color: #eeffe0;
 }
+.active{
+  font-family: 'cyclicsans-bold';
+  color: #000000;
+}
 
 /* -------------------------------------------------- */

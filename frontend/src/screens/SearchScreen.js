@@ -4,13 +4,14 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import Col from '../../node_modules/react-bootstrap/esm/Col';
 import Row from '../../node_modules/react-bootstrap/esm/Row';
+import { prices } from '../utils';
 import { listProducts } from '../actions/productActions';
 import CardItems from '../components/CardItems';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
 export default function SearchScreen(props) {
-    const { name = 'all', category = 'all' } = useParams();
+    const { name = 'all', category = 'all', min = 0, max = 0, order = 'latest' } = useParams();
     const dispatch = useDispatch();
 
     const productList = useSelector(state => state.productList);
@@ -28,50 +29,100 @@ export default function SearchScreen(props) {
             listProducts({
                 name: name !== 'all' ? name : '',
                 category: category !== 'all' ? category : '',
+                min,
+                max,
+                order
             })
         );
-    }, [category, dispatch, name]);
+    }, [category, dispatch, max, min, name, order]);
 
     const getFilterUrl = (filter) => {
         const filterCategory = filter.category || category;
         const filterName = filter.name || name;
-        return `/search/category/${filterCategory}/name/${filterName}`;
+
+        const sortOrder = filter.order || order;
+
+
+        const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
+        const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
+        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}`;
     };
     return (
-        <div style={{ marginTop: "120px" }}>
+        <div style={{ marginTop: "120px" }} className='mx-3'>
             <Row fluid>
+                {/* N.O RESULTS */}
                 {
                     loading ? (<LoadingBox />)
                         : error ? (<MessageBox variant="danger">{error}</MessageBox>)
                             : (
-                                <div>
+                                <div className="ml-3">
                                     {products.length} Results found.
                                 </div>
                             )
                 }
+                {/* SORTING */}
+                <div>
+                    Sort by: {' '}
+
+                    <select value={order}
+                        onChange={(e) => {
+                            props.history.push(getFilterUrl({order: e.target.value}))
+                        }}>
+                            <option value="latest">Latest</option>
+                            <option value="lowest">Price (from Low to High)</option>
+                            <option value="highest">Price (from High to Low)</option>
+                    </select>
+                </div>
+
             </Row>
             <Row fluid>
-                <Col md={12} lg={1}>
-                    <h3>Department</h3>
+                <Col md={12} lg={3}>
+                    <h3>Filter: </h3>
 
-                    {loadingCategories ? (
-                        <LoadingBox></LoadingBox>
-                    ) : errorCategories ? (
-                        <MessageBox variant="danger">{errorCategories}</MessageBox>
-                    ) : (
-                        <ul>
-                            {categories.map((c) => (
-                                <li key={c}>
+                    <div>
+                        {loadingCategories ? (
+                            <LoadingBox></LoadingBox>
+                        ) : errorCategories ? (
+                            <MessageBox variant="danger">{errorCategories}</MessageBox>
+                        ) : (
+                            <ul>
+                                <li>
                                     <Link
-                                        className={c === category ? 'active' : ''}
-                                        to={getFilterUrl({ category: c })}
+                                        className={'all' === category ? 'active' : ''}
+                                        to={getFilterUrl({ category: 'all' })}
+                                    >All</Link>
+                                </li>
+
+                                {categories.map((cat) => (
+                                    <li key={cat}>
+                                        <Link
+                                            className={cat === category ? 'active' : ''}
+                                            to={getFilterUrl({ category: cat })}
+                                        >
+                                            {cat}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                    <div>
+                        <h3>Price</h3>
+                        <ul>
+                            {prices.map((pri) => (
+                                <li key={pri.name}>
+                                    <Link
+                                        to={getFilterUrl({ min: pri.min, max: pri.max })}
+                                        className={` ${pri.min}-${pri.max} ` === `${min}-${max}` ? 'active' : ''}
                                     >
-                                        {c}
+                                        <span>{pri.name}</span>
                                     </Link>
                                 </li>
-                            ))}
+                            )
+
+                            )}
                         </ul>
-                    )}
+                    </div>
 
                 </Col>
                 <Col md={12} lg={8} className="mx-auto">

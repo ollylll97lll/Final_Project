@@ -5,14 +5,26 @@ import sampledata from '../sampledata.js'
 import { isAdmin, isAuth } from '../utils.js';
 
 const productRouters = express.Router();
+
 productRouters.get('/', expressAsyncHandler(async (req, res) => {
     const name = req.query.name || '';
     const category = req.query.category || '';
+
+    const min = req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
+    const max = req.query.max && Number(req.query.max) !== 0 ? Number(req.query.max) : 0;
+
+    const order = req.query.order || '';
     
     const nameFilter = name ? {name: {$regex: name, $options:'i' } } : {};
     const categoryFilter = category ? { category } : {};
+    // gte : greater than && lte : less than
+    const priceFilter = min && max ? {price: {$gte: min, $lte: max}}: {};
+    const sortOrder = 
+        order === 'lowest' ? {price: 1}
+    :   order === 'highest' ? {price: -1}
+    :   {_id: -1};
 
-    const products = await productModel.find({...nameFilter, ...categoryFilter});
+    const products = await productModel.find({...nameFilter, ...categoryFilter, ...priceFilter}).sort(sortOrder);
 
     res.send(products);
 }))
