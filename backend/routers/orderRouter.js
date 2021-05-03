@@ -2,6 +2,8 @@ import express from 'express';
 import 'express-async-handler'
 import expressAsyncHandler from 'express-async-handler';
 import orderModel from '../models/orderModel.js'
+import productModel from '../models/productM.js';
+import UserModel from '../models/userM.js';
 import { isAdmin, isAuth } from '../utils.js';
 
 const orderRouter = express.Router();
@@ -10,8 +12,52 @@ const orderRouter = express.Router();
 orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
 
   const orders = await orderModel.find({}).populate('use', 'name');
-  res.send( orders );
+  res.send(orders);
 }))
+
+orderRouter.get(
+  '/summary',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await orderModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          numOrders: { $sum: 1 },
+          totalSales: { $sum: '$totalPrice' },
+        },
+      },
+    ]);
+    const users = await UserModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          numUsers: { $sum: 1 },
+        },
+      },
+    ]);
+    const dailyOrders = await orderModel.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          orders: { $sum: 1 },
+          sales: { $sum: '$totalPrice' },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    const productCategories = await productModel.aggregate([
+      {
+        $group: {
+          _id: '$category',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    res.send({ users, orders, dailyOrders, productCategories });
+  }));
+
 
 // applying the authetication using jwt key
 orderRouter.get('/mine', isAuth, expressAsyncHandler(async (req, res) => {

@@ -1,3 +1,4 @@
+import Dashboard from '../screens/Dashboard';
 import { CartScreen, Home, ProductScreen } from '../screens/index';
 import LoginScreen from '../screens/LoginScreen';
 import MapScreen from '../screens/MapScreen';
@@ -172,6 +173,12 @@ const adminroutes = [
         path: '/user/:id/edit',
         exact: 'true',
         component: UserEditScreen,
+        fallback: <body>...Loading</body>
+    },
+    {
+        path: '/dashboard',
+        exact: 'true',
+        component: Dashboard,
         fallback: <body>...Loading</body>
     },
 ]

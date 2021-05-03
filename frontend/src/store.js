@@ -4,7 +4,7 @@ import { productCategoryListReducer, productCreateReducer, productDeleteReducer,
 import { carouselListReducer } from './reducers/carouselReducers';
 import { cartReducer } from './reducers/cartReducers';
 import { userAddressMapReducer, userDeleteReducer, userDetailsReducer, userListReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer, userUpdateReducer } from './reducers/userReducers';
-import { orderCreateReducer, orderDeleteReducer, orderDeliverReducer, orderDetailsReducer, orderListReducer, orderMineListReducer, orderPayReducer} from './reducers/orderReducers';
+import { orderCreateReducer, orderDeleteReducer, orderDeliverReducer, orderDetailsReducer, orderListReducer, orderMineListReducer, orderPayReducer, orderSummaryReducer} from './reducers/orderReducers';
 
 // set initial state to empty
 const initialState = {
@@ -52,6 +52,7 @@ const reducer = combineReducers({
     userUpdate: userUpdateReducer,
     productCategoryList: productCategoryListReducer,
     userAddressMap : userAddressMapReducer,
+    orderSummary : orderSummaryReducer
 })
 // send to the extension to view
 const composeEnhance = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
