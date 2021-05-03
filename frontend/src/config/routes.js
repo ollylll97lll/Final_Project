@@ -1,5 +1,6 @@
 import { CartScreen, Home, ProductScreen } from '../screens/index';
 import LoginScreen from '../screens/LoginScreen';
+import MapScreen from '../screens/MapScreen';
 import OrderHistoryScreen from '../screens/OrderHistoryScreen';
 import OrderListScreen from '../screens/OrderListScreen';
 import OrderScreen from '../screens/OrderScreen';
@@ -121,6 +122,12 @@ const privateroutes = [
         path: '/profile',
         exact: 'true',
         component: ProfileScreen,
+        fallback: <body>...Loading</body>
+    },
+    {
+        path: '/map',
+        exact: 'true',
+        component: MapScreen,
         fallback: <body>...Loading</body>
     }
 ]

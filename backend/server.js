@@ -20,8 +20,14 @@ app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouters)
 app.use('/api/products', productRouters)
 app.use('/api/orders', orderRouter)
+// PAYPAL CLIENT ID
 app.get('/api/config/paypal', (req,res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+});
+
+// PAYPAL CLIENT ID
+app.get('/api/config/google', (req,res) => {
+    res.send(process.env.GOOGLE_API_KEY || '');
 });
 
 const __dirname = path.resolve();

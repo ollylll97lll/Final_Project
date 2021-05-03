@@ -187,4 +187,29 @@ img.small{
   color: #000000;
 }
 
+
+.full-container{
+  margin-top: 120px !important; 
+  margin: -1rem;
+  height: calc(100vh + 2rem);
+  width: auto;
+}
+.map-input-box{
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0.5rem auto;
+  width: 25rem;
+  height: 5rem;
+  display: flex;
+}
+.map-input-box input{
+  border-radius: 1rem 0 0 1rem;
+  border-right: 0;
+}
+.map-input-box button{
+  border-radius: 1rem 0 0 1rem;
+  border-left: 0;
+}
 /* -------------------------------------------------- */

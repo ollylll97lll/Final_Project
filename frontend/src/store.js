@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { productCategoryListReducer, productCreateReducer, productDeleteReducer, productDetailsReducer, productListReducer, productUpdateReducer } from './reducers/productReducers';
 import { carouselListReducer } from './reducers/carouselReducers';
 import { cartReducer } from './reducers/cartReducers';
-import { userDeleteReducer, userDetailsReducer, userListReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer, userUpdateReducer } from './reducers/userReducers';
+import { userAddressMapReducer, userDeleteReducer, userDetailsReducer, userListReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer, userUpdateReducer } from './reducers/userReducers';
 import { orderCreateReducer, orderDeleteReducer, orderDeliverReducer, orderDetailsReducer, orderListReducer, orderMineListReducer, orderPayReducer} from './reducers/orderReducers';
 
 // set initial state to empty
@@ -50,7 +50,8 @@ const reducer = combineReducers({
     userList: userListReducer,
     userDelete: userDeleteReducer,
     userUpdate: userUpdateReducer,
-    productCategoryList: productCategoryListReducer
+    productCategoryList: productCategoryListReducer,
+    userAddressMap : userAddressMapReducer,
 })
 // send to the extension to view
 const composeEnhance = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

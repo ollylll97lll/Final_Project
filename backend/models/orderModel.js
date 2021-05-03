@@ -51,6 +51,12 @@ const orderSchema = new mongoose.Schema({
             type: String,
             required: true
         },
+        lat: {
+            type: Number
+        },
+        lng: {
+            type: Number
+        },
     },
     paymentMethod: {
         type: String,
