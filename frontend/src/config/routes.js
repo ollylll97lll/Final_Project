@@ -110,7 +110,7 @@ const configroutes = [
         fallback: <body>...Loading</body>
     },
     {
-        path: '/search/category/:category/name/:name/min/:min/max/:max/order/:order',
+        path: '/search/category/:category/name/:name/min/:min/max/:max/order/:order/pageNumber/:pageNumber',
         exact: 'true',
         component: SearchScreen,
         fallback: <body>...Loading</body>
@@ -139,6 +139,12 @@ const adminroutes = [
         fallback: <body>...Loading</body>
     },
     {
+        path: '/productlist/pageNumber/:pageNumber',
+        exact: 'true',
+        component: ProductListScreen,
+        fallback: <body>...Loading</body>
+    },
+    {
         path: '/product/:id/edit',
         exact: 'true',
         component: ProductEditScreen,
@@ -155,7 +161,14 @@ const adminroutes = [
         exact: 'true',
         component: UserListScreen,
         fallback: <body>...Loading</body>
-    }, {
+    },
+    {
+        path: '/userlist/pageNumber/:pageNumber',
+        exact: 'true',
+        component: UserListScreen,
+        fallback: <body>...Loading</body>
+    }, 
+    {
         path: '/user/:id/edit',
         exact: 'true',
         component: UserEditScreen,

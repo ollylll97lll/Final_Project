@@ -8,8 +8,9 @@ const orderRouter = express.Router();
 
 // get name of users from the user collection and return.
 orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+
   const orders = await orderModel.find({}).populate('use', 'name');
-  res.send(orders);
+  res.send( orders );
 }))
 
 // applying the authetication using jwt key

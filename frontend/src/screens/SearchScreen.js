@@ -9,13 +9,14 @@ import { listProducts } from '../actions/productActions';
 import CardItems from '../components/CardItems';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import Pagination from '../../node_modules/react-bootstrap/esm/Pagination';
 
 export default function SearchScreen(props) {
-    const { name = 'all', category = 'all', min = 0, max = 0, order = 'latest' } = useParams();
+    const { name = 'all', category = 'all', min = 0, max = 0, order = 'latest', pageNumber = 1 } = useParams();
     const dispatch = useDispatch();
 
     const productList = useSelector(state => state.productList);
-    const { loading, error, products } = productList;
+    const { loading, error, products, pages, page } = productList;
 
     const productCategoryList = useSelector((state) => state.productCategoryList);
     const {
@@ -31,12 +32,14 @@ export default function SearchScreen(props) {
                 category: category !== 'all' ? category : '',
                 min,
                 max,
-                order
+                order,
+                pageNumber,
             })
         );
-    }, [category, dispatch, max, min, name, order]);
+    }, [category, dispatch, max, min, name, order, pageNumber]);
 
     const getFilterUrl = (filter) => {
+        const filterPage = filter.page || pageNumber;
         const filterCategory = filter.category || category;
         const filterName = filter.name || name;
 
@@ -45,7 +48,7 @@ export default function SearchScreen(props) {
 
         const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
         const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
-        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}`;
+        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}/pageNumber/${filterPage}`;
     };
     return (
         <div style={{ marginTop: "120px" }} className='mx-3'>
@@ -66,11 +69,11 @@ export default function SearchScreen(props) {
 
                     <select value={order}
                         onChange={(e) => {
-                            props.history.push(getFilterUrl({order: e.target.value}))
+                            props.history.push(getFilterUrl({ order: e.target.value }))
                         }}>
-                            <option value="latest">Latest</option>
-                            <option value="lowest">Price (from Low to High)</option>
-                            <option value="highest">Price (from High to Low)</option>
+                        <option value="latest">Latest</option>
+                        <option value="lowest">Price (from Low to High)</option>
+                        <option value="highest">Price (from High to Low)</option>
                     </select>
                 </div>
 
@@ -141,6 +144,20 @@ export default function SearchScreen(props) {
                                                 })
                                             }
                                         </Row>
+                                       <div>
+                                       <Pagination className="text-center">
+                                            <Pagination.First href={getFilterUrl({ page: 1 })}/>
+                                            <Pagination.Prev href={getFilterUrl({ page: page - 1 })}/>
+                                            {
+                                                [...Array(pages).keys()].map(x => (
+                                                    // ARRAY START FROM 0 SO PAGE START AT 0 + 1
+                                                    <Pagination.Item className={ (x+1)===page ? 'active': '' } key={x + 1} href={getFilterUrl({ page: x + 1 })}> {x + 1} </Pagination.Item>
+                                                ))
+                                            }
+                                            <Pagination.Next href={getFilterUrl({ page: page + 1})}/>
+                                            <Pagination.Last href={getFilterUrl({ page: pages})}/>
+                                        </Pagination>
+                                       </div>
                                     </>
 
                                 )

@@ -56,7 +56,7 @@ function Home(props) {
             <MessageBox variant="danger">{error}</MessageBox>) : (
             <main className="mainitemshowcase">
                 <Container>
-
+                <h2>Latest Collections:</h2>
                     <Row xs={1} sm={2} md={3}>
                         {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
                         {

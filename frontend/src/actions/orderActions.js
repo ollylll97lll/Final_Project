@@ -100,7 +100,7 @@ export const listOrders = () => async(dispatch,getState) => {
 
   const {userLogin: {userInfo}} = getState();
   try {
-    const {data} = await axios.get('api/orders',{
+    const {data} = await axios.get(`api/orders`,{
       headers:{
         Authorization: `Bearer ${userInfo.token}`,
       }

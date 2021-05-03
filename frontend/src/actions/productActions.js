@@ -2,7 +2,7 @@ import Axios from "axios";
 import { PRODUCT_CATEGORY_LIST_FAIL, PRODUCT_CATEGORY_LIST_REQUEST, PRODUCT_CATEGORY_LIST_SUCCESS, PRODUCT_CREATE_FAIL, PRODUCT_CREATE_REQUEST, PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_UPDATE_FAIL, PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS } from "../constants/productConstants"
 
 // dispatch the data
-export const listProducts = ( { name= '',  category = '', min = 0, max = 0, order = ''} ) => async (dispatch) => {
+export const listProducts = ( { name= '',  category = '', min = 0, max = 0, order = '', pageNumber = ''} ) => async (dispatch) => {
     dispatch({
         // request with nothing
         type: PRODUCT_LIST_REQUEST
@@ -11,7 +11,7 @@ export const listProducts = ( { name= '',  category = '', min = 0, max = 0, orde
     try {
         // see if the request is succcessed
         // if true send data to the payload
-        const { data } = await Axios.get(`/api/products?name=${name}&category=${category}&min=${min}&max=${max}&order=${order}`);
+        const { data } = await Axios.get(`/api/products?pageNumber=${pageNumber}&name=${name}&category=${category}&min=${min}&max=${max}&order=${order}`);
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
         // else send the error to the payload

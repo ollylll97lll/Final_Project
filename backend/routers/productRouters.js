@@ -10,6 +10,9 @@ productRouters.get('/', expressAsyncHandler(async (req, res) => {
     const name = req.query.name || '';
     const category = req.query.category || '';
 
+    const pageSize = 3;
+    const page = Number(req.query.pageNumber) || 1;
+
     const min = req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
     const max = req.query.max && Number(req.query.max) !== 0 ? Number(req.query.max) : 0;
 
@@ -24,9 +27,14 @@ productRouters.get('/', expressAsyncHandler(async (req, res) => {
     :   order === 'highest' ? {price: -1}
     :   {_id: -1};
 
-    const products = await productModel.find({...nameFilter, ...categoryFilter, ...priceFilter}).sort(sortOrder);
-
-    res.send(products);
+    // return matching number of document from the DB
+    const count = await productModel.count({...nameFilter, ...categoryFilter, ...priceFilter});
+    // return all product with the name filter, cat filter, price filter, sorting order, by pages
+    // Ex: if page 1 then skip = pagesize (=3) * (page 1 - 1) = 0
+    // limit for each page 3 (pageSize) items only
+    const products = await productModel.find({...nameFilter, ...categoryFilter, ...priceFilter}).sort(sortOrder).skip(pageSize * (page-1)).limit(pageSize);
+    // ceil round up to next largest ex: 8.00001 = 9
+    res.send({products, page, pages: Math.ceil(count / pageSize)} );
 }))
 
 productRouters.get(
