@@ -27,7 +27,7 @@ function Home(props) {
 
 
 
-    return (<body>
+    return (<>
         {load ? (
             <LoadingBox />
         ) : err ? (
@@ -72,7 +72,7 @@ function Home(props) {
             </main>)}
         <footer className="informationfooter"><br />
         </footer>
-    </body>
+    </>
     );
 }
 

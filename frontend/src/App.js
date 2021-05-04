@@ -3,8 +3,12 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { adminroutes, configroutes, privateroutes } from './config/routes';
 import NavigationBar from './components/NavigationBar';
 import PrivateRoute from './components/PrivateRoute';
+import ChatBox from './components/ChatBox';
+import { useSelector } from 'react-redux';
 
 function App() {
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin;
 
   // ROUTING
   const CR = configroutes.map(({ path, component, exact }, key) =>
@@ -42,6 +46,11 @@ function App() {
           {CR}
           {AR}
         </Switch>
+        <div className="row center">
+          {
+            userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo}/>
+          }{''}
+        </div>
       </BrowserRouter>
     </body>
   );

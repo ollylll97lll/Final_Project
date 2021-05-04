@@ -13,6 +13,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SearchScreen from '../screens/SearchScreen';
 import ShippingAddressScreen from '../screens/ShippingAddressScreen';
+import SupportScreen from '../screens/SupportScreen';
 import UserEditScreen from '../screens/UserEditScreen';
 import UserListScreen from '../screens/UserListScreen';
 
@@ -179,6 +180,12 @@ const adminroutes = [
         path: '/dashboard',
         exact: 'true',
         component: Dashboard,
+        fallback: <body>...Loading</body>
+    },
+    {
+        path: '/support',
+        exact: 'true',
+        component: SupportScreen,
         fallback: <body>...Loading</body>
     },
 ]
