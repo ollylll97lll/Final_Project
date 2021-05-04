@@ -133,7 +133,7 @@ export default function SupportScreen() {
   };
 
   return (
-    <Row className="full-container support-page" className="mx-1" style={{ marginTop: "120px" }}>
+    <Row className="full-container support-page mx-1" style={{ marginTop: "120px" }}>
       <Col xs={3} className="support-users">
         {/* get everyone but you */}
         {users.filter((x) => x._id !== userInfo._id).length === 0 && (
