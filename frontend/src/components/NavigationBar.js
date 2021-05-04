@@ -133,6 +133,7 @@ function NavigationBar() {
                     <Dropdown.Item><Link to="/orderlist">Order List </Link></Dropdown.Item>
                     <Dropdown.Item><Link to="/userlist">User List</Link></Dropdown.Item>
                     <Dropdown.Item><Link to="/support">Support Chat</Link></Dropdown.Item>
+                    <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown></li></ul>
             ) : userInfo ? (
