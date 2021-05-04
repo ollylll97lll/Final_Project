@@ -91,7 +91,7 @@ export default function SupportScreen() {
         setMessages(allMessages);
       });
     }
-  }, [messages, socket, users]);
+  }, [messages, socket, userInfo._id, userInfo.isAdmin, userInfo.name, users]);
 
   const selectUser = (user) => {
     // select the user with param user
