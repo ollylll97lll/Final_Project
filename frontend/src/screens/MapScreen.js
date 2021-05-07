@@ -7,103 +7,117 @@ import axios from '../../node_modules/axios/index';
 import { USER_ADDRESS_MAP_CONFIRM } from '../constants/userConstants';
 
 const libs = ['places']
-const defaultlocation = { lat: 10.81552882601105, lng: 106.70693773545536 }
+const defaultLocation = { lat: 10.81552882601105, lng: 106.70693773545536 }
 
 export default function MapScreen(props) {
-    const [googleAPIKey, setGoogleAPIKey] = useState('');
+    const [googleApiKey, setGoogleApiKey] = useState('');
     // map position
-    const [center, setCenter] = useState(defaultlocation);
+    const [center, setCenter] = useState(defaultLocation);
     // marker
     const [location, setLocation] = useState(center);
     // 
-    const mapref = useRef(null);
-    const placeref = useRef(null);
-    const markerref = useRef(null);
+    const mapRef = useRef(null);
+    const placeRef = useRef(null);
+    const markerRef = useRef(null);
 
     const dispatch = useDispatch()
     useEffect(() => {
         const fetch = async () => {
-            const { data } = await axios('/api/config/google');
-            setGoogleAPIKey(data);
-            getUserCurrentLocation();
-        }
+          const { data } = await axios('/api/config/google');
+          setGoogleApiKey(data);
+          getUserCurrentLocation();
+        };
         fetch();
-    }, [])
+      }, []);
 
     // onLoad
     const onLoad = (map) => {
-        mapref.current = map;
-    }
-    const onLoadMarker = (marker) => {
-        markerref.current = marker;
-    }
-    const onLoadPlace = (places) => {
-        placeref.current = places;
-    }
+        mapRef.current = map;
+      };
+    
+      const onMarkerLoad = (marker) => {
+        markerRef.current = marker;
+      };
+      const onLoadPlaces = (place) => {
+        placeRef.current = place;
+      };
 
     // onIdle
     const onIdle = () => {
         setLocation({
-            lat: mapref.current.center.lat(),
-            lng: mapref.current.center.lng(),
-        })
-    }
-    const onPlacesChange = () => {
-        const places = placeref.current.getPlaces()[0].geometry.location;
-        setCenter({ lat: places.lat(), lng: places.lng() });
-        setLocation({ lat: places.lat(), lng: places.lng() });
-    }
+          lat: mapRef.current.center.lat(),
+          lng: mapRef.current.center.lng(),
+        });
+      };
+      const onPlacesChanged = () => {
+        const place = placeRef.current.getPlaces()[0].geometry.location;
+        setCenter({ lat: place.lat(), lng: place.lng() });
+        setLocation({ lat: place.lat(), lng: place.lng() });
+      };
 
-    const onConfirm = () => {
-        const places = placeref.current.getPlaces();
+      const onConfirm = () => {
+        const places = placeRef.current.getPlaces();
         if (places && places.length === 1) {
-            dispatch({
-                type: USER_ADDRESS_MAP_CONFIRM,
-                payload: {
-                    lat: location.lat,
-                    lng: location.lng,
-                    address: places[0].formatted_address,
-                    name: places[0].name,
-                    vicinity: places[0].vicinity,
-                    googleAddressId: places[0].id,
-                },
-            });
-            alert('location added');
-            props.history.push('/shipping');
+          // dispatch select action
+          dispatch({
+            type: USER_ADDRESS_MAP_CONFIRM,
+            payload: {
+              lat: location.lat,
+              lng: location.lng,
+              address: places[0].formatted_address,
+              name: places[0].name,
+              vicinity: places[0].vicinity,
+              googleAddressId: places[0].id,
+            },
+          });
+          alert('location selected successfully.');
+          props.history.push('/shipping');
         } else {
-            alert('location not added');
+          alert('Please enter your address');
         }
-    }
-    const getUserCurrentLocation = () => {
+      };
+      const getUserCurrentLocation = () => {
         if (!navigator.geolocation) {
-            alert('geolocation not supported or you need to turn on location')
+          alert('Geolocation os not supported by this browser');
         } else {
-            navigator.geolocation.getCurrentPosition((posistion) => {
-                setCenter({
-                    lat: posistion.coords.latitude,
-                    lng: posistion.coords.longitude
-                });
-                setLocation({
-                    lat: posistion.coords.latitude,
-                    lng: posistion.coords.longitude
-                });
-            })
+          navigator.geolocation.getCurrentPosition((position) => {
+            setCenter({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+            setLocation({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          });
         }
-    }
+      };
     return (
-        googleAPIKey
+        googleApiKey
             ? (<>
                 <div className="full-containter">
-                    <h1>HI</h1>
-                    <LoadScript libraries={libs} googleMapsApiKey={googleAPIKey}>
-                        <GoogleMap id="sample-map" mapContainerStyle={{ height: '100%', width: '100%' }} center={center} zoom={15} onLoad={onLoad} onIdle={onIdle}>
-                            <StandaloneSearchBox onLoad={onLoadPlace} onPlacesChange={onPlacesChange}>
+                    <LoadScript 
+                    libraries={libs} 
+                    googleMapsApiKey={googleApiKey}>
+                        <GoogleMap 
+                        id="sample-map" 
+                        style
+                        mapContainerStyle={{ height: 'calc(100vh - 120px)', width: '100vw', marginTop:'120px' }} 
+                        center={center} 
+                        zoom={15} 
+                        onLoad={onLoad}
+                        onIdle={onIdle}>
+                            <StandaloneSearchBox 
+                            onLoad={onLoadPlaces} 
+                            onPlacesChange={onPlacesChanged}>
                                 <div className="map-input-box">
                                     <input type="text" placeholder="Enter The Address"></input>
                                     <Button variant="primary" onClick={onConfirm}>Confirm</Button>
                                 </div>
                             </StandaloneSearchBox>
-                            <Marker posistion={location} onLoad={onLoadMarker}></Marker>
+                            <Marker 
+                            posistion={location} 
+                            onLoad={onMarkerLoad}></Marker>
                         </GoogleMap>
                     </LoadScript>
                 </div>

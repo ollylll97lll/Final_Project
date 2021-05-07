@@ -121,7 +121,7 @@ export default function OrderScreen(props) {
                                                             </div>
                                                             <div className="min-30">
                                                                 {/* NAME */}
-                                                                <Link to={`/product/${item.product}`}>{item.name}</Link>
+                                                                <Link to={`/products/${item.product}`}>{item.name}</Link>
                                                             </div>
 
                                                             <div >
@@ -147,41 +147,43 @@ export default function OrderScreen(props) {
                                     <li><h2>Order Summary:</h2></li>
                                     <li>
                                         <Row>
-                                            <div><strong>Items Price</strong></div>
-                                            <div>{order.itemsPrice}<sup>&#8363;</sup></div>
+                                            <div><strong>Items Price:</strong> &nbsp;</div>
+                                            <div> {order.itemsPrice}<sup>&#8363;</sup></div>
                                         </Row>
                                     </li>
                                     <li>
                                         <Row>
-                                            <div><strong>Shipping</strong></div>
-                                            <div>{order.shippingPrice}<sup>&#8363;</sup></div>
+                                            <div><strong>Shipping: </strong>  &nbsp;</div>
+                                            <div> {order.shippingPrice}<sup>&#8363;</sup></div>
                                         </Row>
                                     </li>
                                     <li>
                                         <Row>
-                                            <div><strong>Tax</strong></div>
-                                            <div>{order.taxPrice}<sup>&#8363;</sup></div>
+                                            <div><strong>Tax: </strong>  &nbsp;</div>
+                                            <div> {order.taxPrice}<sup>&#8363;</sup></div>
                                         </Row>
                                     </li>
                                     <li>
                                         <Row>
-                                            <div><strong>Order Total:</strong></div>
-                                            <div>{order.totalPrice}<sup>&#8363;</sup></div>
+                                            <div><strong>Order Total: </strong>  &nbsp;</div>
+                                            <div> {order.totalPrice}<sup>&#8363;</sup></div>
                                         </Row>
                                     </li>
                                     {
+                                        order.paymentMethod === 'cod' ?
+                                            (<span>COD method</span>) :
 
-                                        !order.isPaid && (
-                                            <li>
-                                                {!sdkReady ? (<LoadingBox></LoadingBox>) :
-                                                    (
-                                                        <>{errorPay && (<MessageBox variant="danger">{errorPay}</MessageBox>)}
-                                                            {loadingPay && <LoadingBox />}
-                                                            <PayPalButton amount={(order.totalPrice)}
-                                                                onSuccess={successPaymentHandler}></PayPalButton></>
-                                                    )}
-                                            </li>
-                                        )
+                                            !order.isPaid && (
+                                                <li>
+                                                    {!sdkReady ? (<LoadingBox></LoadingBox>) :
+                                                        (
+                                                            <>{errorPay && (<MessageBox variant="danger">{errorPay}</MessageBox>)}
+                                                                {loadingPay && <LoadingBox />}
+                                                                <PayPalButton amount={(order.totalPrice)}
+                                                                    onSuccess={successPaymentHandler}></PayPalButton></>
+                                                        )}
+                                                </li>
+                                            )
                                     }
                                     {/* check whether the user is Admin, the order is paid and not delivered, then render this component */}
                                     {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
@@ -195,6 +197,19 @@ export default function OrderScreen(props) {
                                             </Button>
                                         </li>
                                     )}
+                                    {
+                                       userInfo.isAdmin && order.paymentMethod === "cod" && !order.isDelivered && (
+                                            <li>
+                                            {loadingDeliver && <LoadingBox></LoadingBox>}
+                                            {errorDeliver && (
+                                                <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                                            )}
+                                            <Button onClick={deliverHandler}>
+                                                Order Delivered
+                                            </Button>
+                                        </li>
+                                        )
+                                    }
                                 </ul>
                             </Card.Body>
                         </Card>

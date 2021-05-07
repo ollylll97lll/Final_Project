@@ -25,7 +25,7 @@ export default function CartScreen(props) {
         props.history.push('/login?redirect=shipping');
     }
     return (
-        <Container className="cartscreen" fluid>
+        <Container className="cartscreen" fluid style={{marginTop:"120px"}}>
             <Row>
                 <Col md={8}>
                     <h1>Checkout:</h1>

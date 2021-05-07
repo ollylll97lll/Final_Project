@@ -142,6 +142,10 @@ orderRouter.put(
     const order = await orderModel.findById(req.params.id);
     if (order) {
       order.isDelivered = true;
+      // for cod packages it needs to paid at the delivery day
+      order.isPaid = true;
+      order.paidAt = Date.now();
+      
       order.deliveredAt = Date.now();
 
       const updatedOrder = await order.save();

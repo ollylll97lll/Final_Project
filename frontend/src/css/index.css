@@ -275,3 +275,32 @@ img.small{
 .support-users .unread {
   background-color: #f02020;
 }
+
+/* Map */
+.full-container {
+  margin:0;
+  height: calc(100vh - 120px);
+}
+
+.map-input-box {
+  box-sizing: border-box;
+  position: fixed;
+  float: left;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: 0.5rem auto;
+  width: 75vw;
+  height: 4rem;
+  display: flex;
+}
+.map-input-box input {
+  border-radius: 1rem 0 0 1rem;
+  border-right: 0;
+  width: 80%;
+}
+.map-input-box button {
+  border-radius: 0 1rem 1rem 0;
+  border-left: 0;
+  width: 20%;
+}

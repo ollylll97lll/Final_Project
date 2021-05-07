@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { detailsProduct } from '../actions/productActions';
+import { disable } from 'debug';
 
 function ProductScreen(props) {
     const dispatch = useDispatch();
@@ -59,8 +60,8 @@ function ProductScreen(props) {
                                             <h1>
                                                 {
                                                     product.countInStock > 0 ?
-                                                        (<span >In Stock</span>) :
-                                                        (<span style={{ color: "red" }}>Unavailable</span>)
+                                                        (<span > In Stock</span>) :
+                                                        (<span style={{ color: "red" }}> Unavailable</span>)
                                                 }
                                             </h1>
                                         </div>
@@ -87,7 +88,13 @@ function ProductScreen(props) {
                                             </>
                                         )
                                     }
-                                    <li><Button onClick={addToCartHandle} primary block>Add to Cart</Button></li>
+                                    <li>
+                                        {
+                                            product.countInStock > 0 ?
+                                            (<Button onClick={addToCartHandle} variant="primary" block>Add to Cart</Button>) :
+                                            (<Button variant="secondary" block disabled>No Item to Add</Button> )
+                                        }
+                                        </li>
                                 </ul>
                             </Card.Body>
                         </Card>

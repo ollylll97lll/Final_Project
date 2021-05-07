@@ -85,9 +85,10 @@ function NavigationBar() {
 
           {/* <!-- PAGES NAVIGATION BAR --> */}
           <ul className="main-header-nav-bar">
+
             <li className="header-nav-list-item">
               <div className="main-header-nav-items">
-                <Link to="/collections">LATEST COLLECTION</Link>
+                <Link to="/search/name/all">LATEST COLLECTION</Link>
               </div>
             </li>
 
