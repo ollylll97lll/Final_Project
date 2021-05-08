@@ -14,8 +14,8 @@ export default function Dashboard() {
         dispatch(summaryOrder());
     }, [dispatch])
     return (
-        <div>
-            <Row>
+        <div style={{marginTop:"120px"}} >
+            <Row className="mx-1">
                 <h1>DASHBOARD</h1>
             </Row>
             {
