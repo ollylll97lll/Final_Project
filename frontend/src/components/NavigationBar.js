@@ -124,7 +124,7 @@ function NavigationBar() {
               <ul className="secondary-header-nav-bar customer-nav-bar"><li className="header-nav-list-item">
                 <Dropdown>
                   <Dropdown.Toggle id="nonedropdown">
-                    <Link to="#admin">Welcome back, Administrator</Link>
+                    Welcome back, Administrator
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
@@ -154,7 +154,7 @@ function NavigationBar() {
 
                 <li className="header-nav-list-item"><Dropdown>
                   <Dropdown.Toggle id="nonedropdown">
-                    <Link to="/#">Hello, {userInfo.name}</Link>
+                    Hello, {userInfo.name}
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>

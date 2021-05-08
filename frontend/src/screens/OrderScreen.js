@@ -69,8 +69,8 @@ export default function OrderScreen(props) {
     const deliverHandler = () => {
         dispatch(deliverOrder(order._id));
     }
-    return loading ? (<LoadingBox />) : error ? (<MessageBox variant="danger">{error}</MessageBox>) : (
-        <div>
+    return loading ? (<LoadingBox style={{marginTop:'120px'}}/>) : error ? (<MessageBox variant="danger"  style={{marginTop:'120px'}}>{error}</MessageBox>) : (
+        <div  style={{marginTop:'120px'}}>
             <Container>
                 <h1>Order {order._id}</h1>
                 <Row>
