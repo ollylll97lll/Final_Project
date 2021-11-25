@@ -2,14 +2,19 @@ import http from 'http'
 import { Server } from 'socket.io'
 import express from 'express';
 import mongoose from 'mongoose';
-import data from './sampledata.js'
-import userRouters from './routers/userRouters.js';
-import productRouters from './routers/productRouters.js';
+// import data from './sampledata.js'
+import newSampleData from './newsampledata.js';
+// import userRouters from './routers/userRouters.js';
+// import productRouters from './routers/productRouters.js';
 import dotenv from 'dotenv';
-import orderRouter from './routers/orderRouter.js';
+// import orderRouter from './routers/orderRouter.js';
 import uploadRouter from './routers/uploadRouter.js';
 import path from 'path';
 
+import userRouter from './newrouters/user.js';
+import productRouter from './newrouters/product.js'
+import statisticRouter from './newrouters/statistic.js'
+import orderRouter from './newrouters/order.js'
 dotenv.config();
 
 const app = express();
@@ -19,9 +24,17 @@ app.get('/api/carousels', (req, res) => {
     res.send(data.carouseldata);
 })
 app.use('/api/uploads', uploadRouter);
-app.use('/api/users', userRouters)
-app.use('/api/products', productRouters)
+// app.use('/api/users', userRouters)
+// app.use('/api/products', productRouters)
+// app.use('/api/orders', orderRouter)
+
+// NEW ROUTES
+app.use('/api/users', userRouter)
+app.use('/api/products', productRouter)
+app.use('/api/statistic', statisticRouter)
 app.use('/api/orders', orderRouter)
+
+
 // PAYPAL CLIENT ID
 app.get('/api/config/paypal', (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
