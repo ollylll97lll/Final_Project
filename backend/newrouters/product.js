@@ -6,7 +6,11 @@ import newProductModel from '../newmodels/newProductM.js';
 import newSampleData from '../newsampledata.js';
 import { isAdmin, isAuth } from '../utils.js';
 
+import fs from 'fs'
+
 const productRouter = express.Router();
+const uploadfolderName = './backend/uploaded'
+
 // seed data
 productRouter.get('/seed', expressAsyncHandler(async (req, res) => {
     await newProductModel.remove({});
@@ -30,7 +34,7 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
     const order = req.query.order || '';
 
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
-    const coll3ctionFilter = coll3ction ? { coll3ction: { $regex: coll3ction, $option: 'i' } } : {};
+    const coll3ctionFilter = coll3ction ? { coll3ction: { $regex: coll3ction } } : {};
     const categoryFilter = category ? { category } : {};
     // gte : greater than && lte : less than
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
@@ -66,6 +70,29 @@ productRouter.get(
 productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     const product = await newProductModel.findById(req.params.id);
     if (product) {
+        // const returnvariants = [];
+        // get list of foldername from variants array
+        [...product.variants].map((variant, index) => {
+            // get list of image links from the foldername
+            const imagefolder = variant.imagefolder;
+            const files = fs.readdirSync(`${uploadfolderName}${imagefolder}`)
+            const returnfilelist = [];
+
+            // push filename into files array
+            files.map(file => {
+                returnfilelist.push(`${uploadfolderName}/${file}`);
+            })
+            // 
+            const tempvariant = {
+                colors: variant.colors,
+                _id: variant._id,
+                discount: variant.discount,
+                amount: variant.amount,
+                files: returnfilelist
+            }
+            return product.variants[index] = tempvariant;
+            // returnvariants.push(tempvariant);
+        })
         res.send(product);
     } else {
         res.status(404).send({ message: 'NO PRODUCT FOUND' })

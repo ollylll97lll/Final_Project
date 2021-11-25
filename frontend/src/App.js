@@ -48,7 +48,7 @@ function App() {
         </Switch>
         <div className="row center">
           {
-            userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo}/>
+            userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />
           }{''}
         </div>
       </BrowserRouter>

@@ -15,13 +15,15 @@ import userRouter from './newrouters/user.js';
 import productRouter from './newrouters/product.js'
 import statisticRouter from './newrouters/statistic.js'
 import orderRouter from './newrouters/order.js'
+import bodyParser from 'body-parser'
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 app.get('/api/carousels', (req, res) => {
-    res.send(data.carouseldata);
+    res.send(newSampleData.carouseldata);
 })
 app.use('/api/uploads', uploadRouter);
 // app.use('/api/users', userRouters)
@@ -34,7 +36,6 @@ app.use('/api/products', productRouter)
 app.use('/api/statistic', statisticRouter)
 app.use('/api/orders', orderRouter)
 
-
 // PAYPAL CLIENT ID
 app.get('/api/config/paypal', (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
@@ -46,9 +47,17 @@ app.get('/api/config/google', (req, res) => {
 });
 
 const __dirname = path.resolve();
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-app.use(express.static(path.join(__dirname, '/frontend/build')));
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/build/index.html')))
+// read files from backend
+
+app.use('/uploads', express.static('./backend/uploaded'));
+
+app.use(bodyParser.raw({ type: 'application/octet-stream', limit: '100mb' }));
+app.use(bodyParser.json())
+
+
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+// app.use(express.static(path.join(__dirname, '/frontend/build')));
+// app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/build/index.html')))
 
 app.get('/', (req, res) => {
     res.send('sever ready')

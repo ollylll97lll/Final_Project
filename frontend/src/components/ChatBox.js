@@ -76,15 +76,22 @@ export default function ChatBox(props) {
         <div className="chatbox">
             {
                 !isOpen
-                    ? (<button type="button" onClick={supportHandler}>
-                        <img src="/images/logo.png" style={{ width: "20px", height: "20px" }} alt="" />
+                    ? (<button type="button" style={{ position: 'absolute', bottom: '1rem', right: '1rem', borderRadius: '100px', height: '80px', width: '80px' }} onClick={supportHandler}>
+                        <img src="/images/logo.png" style={{ width: "50px", height: "50px" }} alt="" />
                     </button>)
                     : (
-                        <Card>
-                            <Card.Body>
-                                <Row><strong>Support</strong>
-                                    <button type="button" onClick={closeHandler}>X</button></Row>
-                                <ul ref={uiMessagesRef}>
+                        <div style={{ backgroundColor: 'white', border: '0.5px solid', borderRadius: '10px', display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+                            <div style={{ height: '10%', top: '10px', borderBottom: '1px solid', width: '100%', display: 'flex', alignItems: 'center' }}>
+                                <span style={{ paddingLeft: '10px' }}>Support</span>
+                                <svg
+                                    onClick={closeHandler}
+                                    width="16" height="16" fill="currentColor" className='chatbox-exit' viewBox="0 0 16 16" style={{ position: 'absolute', right: '10px' }}>
+                                    <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
+                                    <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
+                                </svg>
+                            </div>
+                            <div style={{ height: '82.5%' }}>
+                                <ul ref={uiMessagesRef} style={{}}>
                                     {messages.map((msg, index) => (
                                         <li key={index}>
                                             <strong>{`${msg.name}:`}</strong> {msg.body}
@@ -92,18 +99,18 @@ export default function ChatBox(props) {
                                     ))
                                     }
                                 </ul>
-                                <div>
-                                    <form onSubmit={submitHandler} className="row">
-                                        <input
-                                            type="text"
-                                            placeholder="...Type Here..."
-                                            value={messageBody}
-                                            onChange={(e) => setMessageBody(e.target.value)} />
-                                        <button type="submit">Send</button>
-                                    </form>
-                                </div>
-                            </Card.Body>
-                        </Card>
+                            </div>
+                            <div style={{ height: '7.5%' }}>
+                                <form onSubmit={submitHandler} style={{ height: '100%' }}>
+                                    <input
+                                        type="text"
+                                        placeholder="...Type Here..."
+                                        value={messageBody}
+                                        onChange={(e) => setMessageBody(e.target.value)} />
+                                    <button type="submit" style={{ width: '20%', height: '100%' }}>Send</button>
+                                </form>
+                            </div>
+                        </div>
                     )
             }
         </div>

@@ -1,17 +1,17 @@
-const orand = '/images/orand.jpg';
-const orand1 = '/images/orand1.jpg';
-const orand2 = '/images/orand2.jpg';
+const orand = '/newimages/images/carousel/orand.jpg';
+const orand1 = '/newimages/images/carousel/orand1.jpg';
+const orand2 = '/newimages/images/carousel/orand2.jpg';
 
-const pastel = '/images/pastel.jpg';
-const pastel1 = '/images/pastel1.jpg';
+const pastel = '/newimages/images/carousel/pastel.jpg';
+const pastel1 = '/newimages/images/carousel/pastel1.jpg';
 
-const location = '/images/location.jpg';
-const location1 = '/images/location1.jpg';
+const location = '/newimages/images/carousel/location.jpg';
+const location1 = '/newimages/images/carousel/location1.jpg';
 
-const collection1 = '/images/orand'
-const collection2 = '/images/category2'
-const collection3 = '/images/category3'
-const collection4 = '/images/category4'
+const collection1 = '/newimages/images/orand'
+const collection2 = '/newimages/images/category2'
+const collection3 = '/newimages/images/category3'
+const collection4 = '/newimages/images/category4'
 
 import bcrypt from 'bcrypt';
 const newSampleData = {
@@ -19,37 +19,61 @@ const newSampleData = {
         {
             _id: '1',
             image: orand,
-            caption: "Orand 1"
+            caption: "Orand 1",
+            description: 'Freshly harvested from And garden, The Orand season is coming 🍊👩🏻‍🌾',
+            color: '#DF8701',
+            isButton: true,
+            isDark: false
         },
         {
             _id: '2',
             image: orand1,
-            caption: "Orand 2"
+            caption: "Orand 2",
+            color: '#DF8701',
+            isButton: true,
+            isDark: true
+
         },
         {
             _id: '3',
             image: orand2,
-            caption: "Orand 3"
+            caption: "Orand 3",
+            color: '#DF8701',
+            isButton: true,
+            isDark: true
+
         },
         {
             _id: '4',
             image: pastel,
-            caption: "Pastel 1"
+            caption: "Pastel 1",
+            color: '#FBCACE',
+            isButton: true,
+            isDark: true
+
         },
         {
             _id: '5',
             image: pastel1,
-            caption: "Pastel 2"
+            caption: "Pastel 2",
+            color: 'white',
+            isButton: true,
+            isDark: true
+
         },
         {
             _id: '6',
             image: location,
-            caption: "Location 1"
+            caption: "Location 1",
+            color: '#1D1E3C',
+
         },
         {
             _id: '7',
             image: location1,
-            caption: "Location 2"
+            caption: "Location 2",
+            color: '#1D1E3C',
+
         }
     ],
 
