@@ -250,7 +250,9 @@ img.small {
   /* width: 33vw;
   height: 70vh; */
 }
-
+::-webkit-scrollbar{
+  display: none;
+}
 .chatbox ul {
   overflow-y: scroll;
   width: 100%;

@@ -391,6 +391,9 @@ const newSampleData = {
             description: 'Basic Shirt',
             price: 420,
             thumbnailimg: `${collection1}/outerwear/jacket2/or/thumbnail.jpg`,
+            details: `𝐓𝐡𝐞 𝐬𝐡𝐢𝐫𝐭 𝐲𝐨𝐮 𝐧𝐞𝐞𝐝 🟠🔵⚪️\n
+            One basic shirt can give you variety of styling.
+            `,
             variants: [
                 {
                     colors: {
@@ -515,6 +518,10 @@ const newSampleData = {
             description: 'Orange Off Shoulder Top',
             price: 350,
             thumbnailimg: `${collection1}/top/top1/thumbnail.jpg`,
+            details: `𝐍𝐞𝐰 𝐀𝐫𝐫𝐢𝐯𝐚𝐥𝐬: 𝐎𝐟𝐟 𝐒𝐡𝐨𝐮𝐥𝐝𝐞𝐫 𝐓𝐨𝐩
+            A perfect design for the heat of summer 🌤\n
+            Available in 2 colors: Orange / White
+            `,
             variants: [
                 {
                     colors: {

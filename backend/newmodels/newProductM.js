@@ -26,6 +26,9 @@ const newProductSchema = mongoose.Schema(
         thumbnailimg: {
             type: String
         },
+        details: {
+            type: String
+        },
         variants: [
             {
                 colors: {

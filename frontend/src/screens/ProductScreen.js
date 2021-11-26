@@ -22,9 +22,14 @@ function ProductScreen(props) {
 
     // set item color & size
     const [itemColor, setItemColor] = useState('');
+    // image files based on selected color
+    const [itemImages, setItemImages] = useState([]);
     const [itemSize, setItemSize] = useState([]);
     const [itemCountInStock, setItemCountInStock] = useState(0);
-
+    // set thumbnailimage
+    const [itemThumbnail, setItemThumbnail] = useState('')
+    // size selected => render countinstock
+    const [sizeSelected, setSizeSelected] = useState(false);
     const addToCartHandle = () => {
         props.history.push(`/cart/${productId}?qty=${qty}`);
     }
@@ -32,15 +37,27 @@ function ProductScreen(props) {
     function handleColorPicker(e, v) {
         setItemColor(v.colors.name);
         setItemSize(v.amount);
-        // console.log(v.amount);
+        setItemImages(v.files)
+        setItemThumbnail(v.files[0])
+
+        // reset size
+        setItemCountInStock(0);
+        setSizeSelected(false);
     }
     function handleSizePicker(e, i) {
         setItemCountInStock(i.countInStock);
-        // console.log(i.countInStock);
+        setSizeSelected(true);
     }
     useEffect(() => {
         dispatch(detailsProduct(productId));
     }, [dispatch, productId]);
+
+    useEffect(() => {
+        if (product) {
+            setItemThumbnail(product?.thumbnailimg)
+        }
+        else return
+    }, [product])
     return (
         <div style={{ paddingTop: '120px' }}>
             {loading ? (
@@ -51,13 +68,16 @@ function ProductScreen(props) {
                 <Container fluid>
                     <NavLink href="/"> <span style={{ fontSize: '1.5rem' }}>Return to results</span> </NavLink>
                     <Row>
-                        <Col md={12} lg={6}><Card>
-                            <Card.Body>
-                                <Card.Img src={`http://localhost:8888/uploads${`${product.thumbnailimg}`}`} alt={product.name} rounded></Card.Img>
-                            </Card.Body>
-                        </Card>
+                        <Col md={12} lg={6}>
+                            <Card>
+                                <Card.Body>
+                                    {
+                                        itemThumbnail && (<Card.Img src={`http://localhost:8888/uploads${itemThumbnail}`} alt={product.name} rounded></Card.Img>)
+                                    }
+                                </Card.Body>
+                            </Card>
                         </Col>
-                        <Col md={12} lg={3}>
+                        <Col md={12} lg={6}>
                             <Card>
                                 {/* <Card.Body> */}
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px' }}>
@@ -66,11 +86,27 @@ function ProductScreen(props) {
                                             return (
                                                 <ul style={{ padding: 0, margin: 0 }} className={'color-size-inline'}>
                                                     <li>
-                                                        <div style={{ width: '30px', height: '30px', borderRadius: '30px', backgroundColor: `#${variant.colors.hexcolor}` }} onClick={(e, v = variant) => { handleColorPicker(e, v) }} />
+                                                        <div title={variant.colors.name} style={{ width: '30px', height: '30px', borderRadius: '30px', backgroundColor: `#${variant.colors.hexcolor}` }} onClick={(e, v = variant) => { handleColorPicker(e, v) }} />
                                                     </li>
                                                 </ul>
                                             )
                                         })
+                                    }
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200px', borderTop: '1px lightgray solid', overflowY: 'hidden', scrollbarWidth: 'none' }}>
+                                    {
+                                        itemImages.length > 0 && (
+                                            itemImages.map(image => {
+                                                return (
+                                                    <ul style={{ padding: 0, margin: 0 }} className={'color-size-inline'}>
+                                                        <li>
+                                                            <img src={`http://localhost:8888/uploads${image}`} width={'100px'} height={'100px'} onClick={(e, i = image) => { setItemThumbnail(image) }} />
+                                                        </li>
+                                                    </ul>
+                                                )
+                                            })
+                                        )
+                                        // console.log(itemImages))
                                     }
                                 </div>
                                 {
@@ -83,6 +119,7 @@ function ProductScreen(props) {
                                                         <ul style={{ padding: 0, margin: 0 }} className={'color-size-inline'}>
                                                             <li>
                                                                 <div
+                                                                    title={info.size}
                                                                     onClick={(e, i = info) => { handleSizePicker(e, i) }}
                                                                     style={{ width: '30px', height: '30px', border: '1px black solid', borderRadius: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} className={'size-hover'}>
                                                                     <span>{String(info.size).toLowerCase() == 'freesize' ? 'FS' : info.size}</span>
@@ -108,8 +145,6 @@ function ProductScreen(props) {
                                 </Card.Body>
                             </Card>
 
-                        </Col>
-                        <Col md={12} lg={3}>
                             <Card className="checkout">
                                 <Card.Body>
                                     <ul>
@@ -122,9 +157,9 @@ function ProductScreen(props) {
                                             <div>
                                                 <h1>
                                                     {
-                                                        itemCountInStock > 0 ?
+                                                        sizeSelected ? itemCountInStock > 0 ?
                                                             (<span > In Stock</span>) :
-                                                            (<span style={{ color: "red" }}> Unavailable</span>)
+                                                            (<span style={{ color: "red" }}> Unavailable</span>) : (<></>)
                                                     }
                                                 </h1>
                                             </div>
@@ -162,18 +197,17 @@ function ProductScreen(props) {
                                 </Card.Body>
                             </Card>
                         </Col>
+
+
                     </Row>
                     <Row>
                         <Col><Card>
                             <Card.Body>
                                 <Row className='product-details'>
-                                    <div><h3>Product Details :</h3></div>
-                                    <div>
-                                        <ul>
-                                            <li>Category</li>
-                                            <li>pattern</li>
-                                            <li>Matterial</li>
-                                        </ul>
+                                    <div style={{ display: 'block', width: '100%' }}><h3>Product Details :</h3></div>
+                                    <br />
+                                    <div style={{ paddingTop: '20px' }}>
+                                        <span style={{ fontSize: '1.5rem' }}>{product.details}</span>
                                     </div>
                                 </Row>
                             </Card.Body>

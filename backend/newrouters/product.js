@@ -80,7 +80,7 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
 
             // push filename into files array
             files.map(file => {
-                returnfilelist.push(`${uploadfolderName}/${file}`);
+                returnfilelist.push(`${imagefolder}/${file}`);
             })
             // 
             const tempvariant = {
