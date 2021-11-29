@@ -11,7 +11,14 @@ $ cd final_project
 Atlas Cloud MongoDB <br/>
 Create database at https://cloud.mongodb.com <br/>
 Create .env file in root folder <br/>
+Set PORT=8888
 Set URI=mongodb+srv://your-db-connection
+Set JWT_SECRET= *anything you like here*
+if you want to use PayPal and Google Map, then go to their pages bellow and sign up for new credential keys
+PayPal: https://developer.paypal.com/developer/accounts
+GoogleMap: https://console.cloud.google.com
+then set PAYPAL_CLIENT=*your new credential key for PayPal
+Set GOOGLE_API_KEY = *your new creadential key for Google
 ### 3. Run Backend
 $ npm install <br/>
 $ npm start
